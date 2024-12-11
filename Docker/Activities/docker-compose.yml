@@ -1,0 +1,14 @@
+services:
+#redis database
+    redis-server:
+        image: 'redis'
+        volumes:
+          - ./redis:/data
+        command: ["redis-server", "--protected-mode",  "no" , "--save", "1 1"]
+
+        #node application
+    node-app:
+        build: ./
+        image: docker.io/saurav964/visits
+        ports:
+            - "8081:8081"
