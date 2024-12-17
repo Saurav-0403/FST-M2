@@ -1,0 +1,12 @@
+-- Create the input table
+CREATE TABLE files (line STRING);
+
+-- Load data into table
+LOAD DATA LOCAL INPATH '/root/input.txt' INTO TABLE files;
+
+-- Create a new table using data from the files table
+CREATE TABLE word_counts AS
+SELECT word, count(word) AS no_of_words FROM
+(SELECT explode(split(line, ' ')) AS word FROM files) AS w
+GROUP BY word
+ORDER BY no_of_words DESC;
