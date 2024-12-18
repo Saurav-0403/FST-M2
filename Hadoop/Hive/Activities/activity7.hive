@@ -1,0 +1,22 @@
+-- Drop the old tables
+DROP TABLE employee;
+
+-- Create Table Employee
+CREATE TABLE employee(id INT, name STRING, dept STRING, yoj INT, salary INT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+TBLPROPERTIES ("skip.header.line.count"="1");
+
+-- Load data from local CSV file to employee table
+LOAD DATA LOCAL INPATH '/root/EmpData.csv' INTO TABLE employee;
+
+-- Select Data from table
+-- To view all IT department  emloyee
+INSERT OVERWRITE LOCAL DIRECTORY '/root/HiveOutput1'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM employee WHERE dept='IT';
+
+-- To get the no. of employees in Human resources
+INSERT OVERWRITE LOCAL DIRECTORY '/root/HiveOutput2'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT COUNT(*) FROM employee WHERE dept= 'Human Resources';
