@@ -1,0 +1,9 @@
+-- Activity 2:
+-- For Episode IV
+CREATE TABLE episodeIV (name STRING, line STRING) 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+LOAD DATA LOCAL INPATH '/root/Inputs/episodeIV_dialogues.txt' INTO TABLE episodeIV;
+
+INSERT OVERWRITE LOCAL DIRECTORY '/root/Project2HiveOutput'
+SELECT COUNT(*) FROM episodeIV WHERE INSTR(line, 'Luke')>0;
+-- SELECT COUNT(*) FROM episodeIV WHERE line LIKE '%Luke%';
